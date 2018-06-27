@@ -63,15 +63,11 @@ class SongsTableViewController: UITableViewController {
             if let me = self {
                 let dispatchGroup = DispatchGroup()
                 if let client = DropboxClientsManager.authorizedClient {
-                    print("pos 1")
                     let path = "/\(me.album)"
-                    print("pos 1a")
                     enter(dispatchGroup)
-                    client.files.listFolder(path: path, recursive: false).response {[weak self] response, error in
-                        print("pos 2")
+                    client.files.listFolder(path: path, recursive: false).response {response, error in
                         // TODO show progress indicator!
-                        if let me = self, let result = response {
-                            print("Folder contents:")
+                        if let result = response {
                             for entry in result.entries {
                                 if entry is Files.FileMetadata && entry.name.hasSuffix(".mp3"){
                                     me.songs.append(Song(album:me.album, title:entry.name, idx:me.songs.count))
@@ -80,72 +76,38 @@ class SongsTableViewController: UITableViewController {
                         } else {
                             print("Error: \(error!)")
                         }
-                        }.response(completionHandler: {[weak self] _,_ in
-                            print("pos 3")
-                            if let me = self {
-                                me.fillQueuePlayer(dispatchGroup)
-                            }
-                            leave(dispatchGroup)
+                    }.response(completionHandler: {_,_ in
+                        me.fillQueuePlayer(dispatchGroup)
+                        leave(dispatchGroup)
+                    })
+
+                    // wait until all url are loaded asynchronously
+                    dispatchGroup.wait()
+
+                    for song in me.songs {
+                        if let url = song.url {
+                            let playerItem = AVPlayerItem(url: url)
+                            me.player.insert(playerItem, after: me.player.items().last)
                         }
-                    )
-                }
-                
-                print("bfore wait")
-                dispatchGroup.wait()
-                print("after wait")
-                dispatchGroup.enter()
-                DispatchQueue.main.async {[weak self] in
-                    if let me = self {
-                        for song in me.songs {
-                            if let url = song.url {
-                                print("adding player item for \(song)")
-                                let playerItem = AVPlayerItem(url: url)
-                                if me.player.items().count > 0 {
-                                    if me.player.canInsert(playerItem, after: me.player.items().last) {
-                                        me.player.insert(playerItem, after: me.player.items().last)
-                                    } else {
-                                        print("cannot insert 1")
-                                    }
-                                } else {
-                                    print("player \(me.player)")
-                                    if me.player.canInsert(playerItem, after: nil) {
-                                        me.player.insert(playerItem, after: nil)
-                                    } else {
-                                        print("cannot insert 2")
-                                    }
-                                }
-                                assert(me.player.items().count > 0)
-                                assert(me.player.items().last != nil)
-                                print("added player item for \(song)")
-                            }
-                        }
-                        dispatchGroup.leave()
+                    }
+                    //            self.player.addPeriodicTimeObserver(forInterval: CMTimeMake(1, 100), queue: DispatchQueue.main) {
+                    //                [weak self] time in
+                    //                guard let strongSelf = self else { return }
+                    //                let timeString = String(format: "%02.2f", CMTimeGetSeconds(time))
+                    //
+                    //                if UIApplication.shared.applicationState == .active {
+                    //                    // TODO
+                    //                    //strongSelf.timeLabel.text = timeString
+                    //                } else {
+                    //                    print("Background: \(timeString)")
+                    //                }
+                    //            }
+                    DispatchQueue.main.async {[weak self] in
+                        me.tableView.reloadData()
+                        me.player.addObserver(self!, forKeyPath: "currentItem", options: [.new, .initial] , context: nil)
+                        me.rightPlayAllBarButtonItem?.isEnabled = true
                     }
                 }
-                dispatchGroup.wait()
-                //            self.player.addPeriodicTimeObserver(forInterval: CMTimeMake(1, 100), queue: DispatchQueue.main) {
-                //                [weak self] time in
-                //                guard let strongSelf = self else { return }
-                //                let timeString = String(format: "%02.2f", CMTimeGetSeconds(time))
-                //
-                //                if UIApplication.shared.applicationState == .active {
-                //                    // TODO
-                //                    //strongSelf.timeLabel.text = timeString
-                //                } else {
-                //                    print("Background: \(timeString)")
-                //                }
-                //            }
-                dispatchGroup.enter()
-                DispatchQueue.main.async {[weak self] in
-                    self?.tableView.reloadData()
-                    dispatchGroup.leave()
-                }
-                dispatchGroup.wait()
-                self?.player.addObserver(self!, forKeyPath: "currentItem", options: [.new, .initial] , context: nil)
-                DispatchQueue.main.async {[weak self] in
-                    self?.rightPlayAllBarButtonItem?.isEnabled = true
-                }
-
             }
         }
     }
