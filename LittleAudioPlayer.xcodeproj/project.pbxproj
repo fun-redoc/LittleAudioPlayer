@@ -15,6 +15,7 @@
 		EC95BFFE20DE394000277043 /* FoldersTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC95BFFD20DE394000277043 /* FoldersTableViewController.swift */; };
 		EC95C00020DE943F00277043 /* SongsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC95BFFF20DE943F00277043 /* SongsTableViewController.swift */; };
 		EC95C00220DFA18600277043 /* LogonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC95C00120DFA18600277043 /* LogonViewController.swift */; };
+		ECC09A0320E161F30067F28A /* Song.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC09A0220E161F30067F28A /* Song.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		EC95BFFD20DE394000277043 /* FoldersTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoldersTableViewController.swift; sourceTree = "<group>"; };
 		EC95BFFF20DE943F00277043 /* SongsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongsTableViewController.swift; sourceTree = "<group>"; };
 		EC95C00120DFA18600277043 /* LogonViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogonViewController.swift; sourceTree = "<group>"; };
+		ECC09A0220E161F30067F28A /* Song.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Song.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +88,7 @@
 				EC709D3A20D6EFFA0078CFA5 /* Main.storyboard */,
 				EC95C00120DFA18600277043 /* LogonViewController.swift */,
 				EC95BFFF20DE943F00277043 /* SongsTableViewController.swift */,
+				ECC09A0220E161F30067F28A /* Song.swift */,
 				EC709D3D20D6EFFB0078CFA5 /* Assets.xcassets */,
 				EC709D3F20D6EFFB0078CFA5 /* LaunchScreen.storyboard */,
 				EC709D4220D6EFFB0078CFA5 /* Info.plist */,
@@ -212,6 +215,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ECC09A0320E161F30067F28A /* Song.swift in Sources */,
 				EC95BFFE20DE394000277043 /* FoldersTableViewController.swift in Sources */,
 				EC95C00220DFA18600277043 /* LogonViewController.swift in Sources */,
 				EC709D3920D6EFFA0078CFA5 /* ViewController.swift in Sources */,

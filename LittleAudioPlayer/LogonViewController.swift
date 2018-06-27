@@ -8,9 +8,14 @@
 
 import UIKit
 import SwiftyDropbox
+import AVFoundation
 
 class LogonViewController: UIViewController {
 
+    var player:AVQueuePlayer?
+    var playerItem:AVPlayerItem?
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -61,6 +66,28 @@ class LogonViewController: UIViewController {
     @IBAction func startPlayer(_ sender: UIButton) {
     }
     
+    @IBAction func playItTest(_ sender: UIButton) {
+        do {
+            try AVAudioSession.sharedInstance().setCategory(
+                AVAudioSessionCategoryPlayAndRecord,
+                with: .defaultToSpeaker)
+        } catch {
+            print("Failed to set audio session category.  Error: \(error)")
+        }
+        //let link = "https://dl.dropboxusercontent.com/apitl/1/AADiQoLhmNiA0S8Cgm4hF9tU39lg6nt4O1yHifybtm3gZTQmXeSO4RTiNgbJ15MLiGNltrbD0k66dYiDBp53ONN8WIc0sbM82IhvRr3td4aeC_OifHzcOVMY24jV4R73eFdwzc8TcZMaOhIZNQrxhRj2Qx3MobpkzE6bJ67Qq9raFb8U7bGo4qoHR8fRcV0XcZbW6ZR3_R5xACNN_8P1YnwqpXvCEa5qEi6FcZfmwqfums3otMz74Mfo06zC3u__UlgcZrLaCGc8EBX8ru5lZAU6"
+        let link = "https://dl.dropboxusercontent.com/apitl/1/AAAYrLeo8uUsYoIwH1XJxh5hlqjz3U8wiqmfyi_aFPDpaW37hrFrOmx0uPQMtuPLMnlyNc_yjV9VihVaO0ZnmirNt7qlV4ap03kherOyyH4lM9Iib1-60Fxz4OquITQ5tlLRsIM_zu_3CwJ79uuz2RPicvjSluXT2Am48ocCWGu_OpImS3L4G9bhWZGEYD9vH9ap_n_h9il-99-uGmckRe-Vn1aFfX6YPeojFe0mGKNaShV0-57iyMKeOPdSVPk80qNgHJiRk4yO7TYIcX0ANMxNbAWrYNOrB9O10eVgZQYtLQ"
+        if let url = URL(string: link) {
+            let playerItem:AVPlayerItem = AVPlayerItem(url: url)
+            self.player = AVQueuePlayer(items: [playerItem])
+            if let player = self.player {
+                player.actionAtItemEnd = .advance
+                //            player.addObserver(self, forKeyPath: "currentItem", options: [.new, .initial] , context: nil)
+                player.play()
+            } else {
+                print("Failed to Start Player")
+            }
+        }
+    }
     func logonIntoDropbox( ) {
         DropboxClientsManager.authorizeFromController(UIApplication.shared,
                                                       controller: self,

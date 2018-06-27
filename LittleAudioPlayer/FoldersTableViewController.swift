@@ -23,44 +23,38 @@ class FoldersTableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
-        
-//        if let _ = DropboxClientsManager.authorizedClient?.auth.client.accessToken {
-//            // nothing
-//        } else {
-//            logonIntoDropbox()
-//        }
-        
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        print("viewWillAppear")
-        // start loading album folders
-        var loaded_albums = [String]()
-        if let client = DropboxClientsManager.authorizedClient {
-            // List contents of app folder
-            client.files.listFolder(path: "", recursive: false).response { response, error in
-                // TODO show progress indicator!
-                if let result = response {
-                    print("Folder contents:")
-                    for entry in result.entries {
-                        if entry is Files.FolderMetadata {
-                            print("Folder \(entry.name)")
-                            loaded_albums.append(entry.name)
+        DispatchQueue.global(qos: .userInitiated).async {[weak self] in
+            let dispatchGroup = DispatchGroup()
+            dispatchGroup.enter()
+            var loaded_albums = [String]()
+            if let client = DropboxClientsManager.authorizedClient {
+                // List contents of app folder
+                client.files.listFolder(path: "", recursive: false).response { response, error in
+                    // TODO show progress indicator!
+                    if let result = response {
+                        print("Folder contents:")
+                        for entry in result.entries {
+                            if entry is Files.FolderMetadata {
+                                print("Folder \(entry.name)")
+                                loaded_albums.append(entry.name)
+                            }
                         }
+                    } else {
+                        print("Error: \(error!)")
                     }
-                } else {
-                    print("Error: \(error!)")
-                }
-                }.response(completionHandler:   { _, _ in
-                    self.albums = loaded_albums
-                    print("view reload data nitially \(self.albums)")
-                    self.tableView.reloadData()
-                }
-            )
+                    }.response(completionHandler:   {_, _ in
+                        self!.albums = loaded_albums
+                        dispatchGroup.leave()
+                    }
+                )
+            }
+            dispatchGroup.wait()
+            DispatchQueue.main.async {
+                self!.tableView.reloadData()
+            }
         }
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -134,42 +128,11 @@ class FoldersTableViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
-        if let senderCell = sender as? UITableViewCell {
-            var songs = [String]()
-            if let client = DropboxClientsManager.authorizedClient {
-//                client.files.getTemporaryLink(path: "/boney_m/belfast.mp3").response(completionHandler:  {
-//                    response, _ in print("Temp Link \(response?.link)")
-//                });
-                if let album = senderCell.textLabel?.text {
-                    let path = "/\(album)"
-                    client.files.listFolder(path: path, recursive: false).response { response, error in
-                        // TODO show progress indicator!
-                        if let result = response {
-                            print("Folder contents:")
-                            for entry in result.entries {
-                                if entry is Files.FileMetadata && entry.name.hasSuffix(".mp3"){
-                                    songs.append(entry.name)
-                                }
-                            }
-                        } else {
-                            print("Error: \(error!)")
-                        }
-                        }.response(completionHandler:   { response, _ in
-                            if let response = response {
-                                if let  songsTableViewController = segue.destination as? SongsTableViewController {
-                                    songsTableViewController.album = album
-                                    songsTableViewController.songs = []
-                                    for song in songs {
-                                        songsTableViewController.songs.append(song)
-                                    }
-                                    songsTableViewController.tableView.reloadData()
-                                }
-                            }
-                        })
-                }
+        if let senderCell = sender as? UITableViewCell, let album = senderCell.textLabel?.text {
+            if let  songsTableViewController = segue.destination as? SongsTableViewController {
+                songsTableViewController.album = album
             }
         }
-
     }
 
 }
