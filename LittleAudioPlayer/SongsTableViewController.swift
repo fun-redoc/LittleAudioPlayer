@@ -83,18 +83,30 @@ class SongsTableViewController: UITableViewController {
                     // wait until all url are loaded asynchronously
                     dispatchGroup.wait()
 
-                    //            self.player.addPeriodicTimeObserver(forInterval: CMTimeMake(1, 100), queue: DispatchQueue.main) {
-                    //                [weak self] time in
-                    //                guard let strongSelf = self else { return }
-                    //                let timeString = String(format: "%02.2f", CMTimeGetSeconds(time))
-                    //
-                    //                if UIApplication.shared.applicationState == .active {
-                    //                    // TODO
-                    //                    //strongSelf.timeLabel.text = timeString
-                    //                } else {
-                    //                    print("Background: \(timeString)")
-                    //                }
-                    //            }
+                    self?.player.addPeriodicTimeObserver(forInterval: CMTimeMake(1, 1), queue: DispatchQueue.main) {
+                        [weak self] time in
+                        guard let strongSelf = self else { return }
+                        let timeInS = CMTimeGetSeconds(time)
+                        let timeHrs = Int(timeInS / (60*60))
+                        let timeMin = Int(timeInS / 60) % 60
+                        let timeSec = Int(timeInS) % 60
+//                        let timeString = String(format: "%02f sec", CMTimeGetSeconds(time))
+                        let timeString = String(format: "%02d:%02d:%02d", timeHrs, timeMin, timeSec)
+                        let durationInS = CMTimeGetSeconds((strongSelf.player.currentItem?.duration)!)
+                        let durationHrs = Int(durationInS / (60*60))
+                        let durationMin = Int(durationInS / 60) % 60
+                        let durationSec = Int(durationInS) % 60
+
+                        let durationString = String(format: "%02d:%02d:%02d", durationHrs, durationMin, durationSec)
+        
+                        if UIApplication.shared.applicationState == .active {
+                            let indexPath = strongSelf.tableView.indexPathForSelectedRow
+                            let myCell = strongSelf.tableView.cellForRow(at: indexPath!)
+                            myCell?.detailTextLabel?.text = "\(timeString) / \(durationString)"
+                        } else {
+                            print("Background: \(timeString)")
+                        }
+                    }
                     NotificationCenter.default.addObserver(
                         forName: NSNotification.Name.AVPlayerItemDidPlayToEndTime,
                         object: nil,
