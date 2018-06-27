@@ -22,6 +22,7 @@ class Song {
         return "/\(album)/\(title)"
     }
     func setUrl(_ url:URL) {
+        // TODO remenber the time
         self.url = url
     }
 }

@@ -22,18 +22,18 @@ func leave(_ dg:DispatchGroup) {
 
 class SongsTableViewController: UITableViewController {
 
-    let player: AVQueuePlayer = AVQueuePlayer()
+    let player: AVPlayer = AVPlayer()
     
     
     var album : String = ""
     var songs : [Song] = [] 
-    var songMap = [URL:Song]()
+//    var songMap = [URL:Song]()
     
     var rightPlayAllBarButtonItem:UIBarButtonItem?
     
-    deinit {
-        player.removeObserver(self, forKeyPath: "currentItem")
-    }
+//    deinit {
+//        player.removeObserver(self, forKeyPath: "finishedSong")
+//    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -77,19 +77,12 @@ class SongsTableViewController: UITableViewController {
                             print("Error: \(error!)")
                         }
                     }.response(completionHandler: {_,_ in
-                        me.fillQueuePlayer(dispatchGroup)
                         leave(dispatchGroup)
                     })
 
                     // wait until all url are loaded asynchronously
                     dispatchGroup.wait()
 
-                    for song in me.songs {
-                        if let url = song.url {
-                            let playerItem = AVPlayerItem(url: url)
-                            me.player.insert(playerItem, after: me.player.items().last)
-                        }
-                    }
                     //            self.player.addPeriodicTimeObserver(forInterval: CMTimeMake(1, 100), queue: DispatchQueue.main) {
                     //                [weak self] time in
                     //                guard let strongSelf = self else { return }
@@ -102,10 +95,23 @@ class SongsTableViewController: UITableViewController {
                     //                    print("Background: \(timeString)")
                     //                }
                     //            }
+                    NotificationCenter.default.addObserver(
+                        forName: NSNotification.Name.AVPlayerItemDidPlayToEndTime,
+                        object: nil,
+                        queue: nil,
+                        using: {[weak self] notification in
+                            print("song played to the end")
+                            if let me = self {
+                                DispatchQueue.main.async {
+                                    me.nextSong()
+                                }
+                            }
+                    })
                     DispatchQueue.main.async {[weak self] in
-                        me.tableView.reloadData()
-                        me.player.addObserver(self!, forKeyPath: "currentItem", options: [.new, .initial] , context: nil)
-                        me.rightPlayAllBarButtonItem?.isEnabled = true
+                        if let me = self {
+                            me.tableView.reloadData()
+                            me.rightPlayAllBarButtonItem?.isEnabled = true
+                        }
                     }
                 }
             }
@@ -117,25 +123,11 @@ class SongsTableViewController: UITableViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
-    
-    // MARK: - Observer
-    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-        if keyPath == "currentItem", let player = object as? AVQueuePlayer,
-            let currentItem = player.currentItem?.asset as? AVURLAsset {
-            print("current Item")
-            let url  = currentItem.url
-            if let song = self.songMap[url] {
-                selectSongInTableView(song: song)
-            }
-        }
-    }
-    
     
     // MARK: - Actions
     @objc func nextTapped(sender:UIButton) {
         print("SongsTableViewController:nextTapped")
-        player.advanceToNextItem()
+        nextSong()
     }
     @objc func pauseTapped(sender:UIButton) {
         print("SongsTableViewController:pauseTapped")
@@ -147,7 +139,8 @@ class SongsTableViewController: UITableViewController {
     }
     @objc func playAllTapped(sender:UIButton) {
         print("SongsTableViewController:playAllTapped")
-        player.play()
+        selectFirst()
+        
     }
     
 
@@ -178,6 +171,7 @@ class SongsTableViewController: UITableViewController {
 
      override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let song = songs[indexPath.row]
+        playSong(song)
      }
 
 
@@ -228,41 +222,45 @@ class SongsTableViewController: UITableViewController {
     
     // MARK: - private Functions
     
-    private func fillQueuePlayer(_ dispatchGroup:DispatchGroup) {
+    private func playSong(_ song:Song) {
         if let client = DropboxClientsManager.authorizedClient {
-                for song in self.songs {
-                    enter(dispatchGroup)
-                        client.files.getTemporaryLink(path: song.path())
-                            .response(completionHandler:  {[weak self]
-                                response, error in //print("Temp Link \(response?.link)")
-                                if let me = self, let response = response {
-                                    let link = response.link
-                                    let url = URL(string:link)
-                                    if let url = url {
-                                            song.setUrl(url)
-                                            me.songMap[url] = song
-                                            //                                        DispatchQueue.main.async {
-                                            //                                            self.postContentAdded()
-                                            //                                        }
-                                    }
-                                    leave(dispatchGroup)
-                                } else {
-                                    leave(dispatchGroup)
-                                    print("ERROR getting temporary link for \(song)")
+                client.files.getTemporaryLink(path: song.path())
+                    .response(completionHandler:  {[weak self]
+                        response, error in //print("Temp Link \(response?.link)")
+                        if let me = self, let response = response {
+                            let link = response.link
+                            let url = URL(string:link)
+                            if let url = url {
+                                song.setUrl(url)
+                                DispatchQueue.main.async {
+                                    me.player.replaceCurrentItem(with: AVPlayerItem(url: url))
+                                    me.player.play()
                                 }
-                            })
+                            } else {
+                                // TODO user Error Messages
+                                print("ERROR cound noct fecht song")
+                            }
+                        } else {
+                            print("ERROR getting temporary link for \(song)")
+                        }
+                    })
+        }
+    }
+
+    private func selectFirst() {
+        let indexPath = IndexPath(row: 0, section: 0)
+        self.tableView.selectRow(at: indexPath, animated: true, scrollPosition: UITableViewScrollPosition.middle)
+        self.tableView.delegate?.tableView!(self.tableView, didSelectRowAt: indexPath)
+    }
+
+    
+    private func nextSong() {
+        if let oldIndexPath = self.tableView.indexPathForSelectedRow {
+            if self.songs.count-1 > oldIndexPath.row {
+                let indexPath = IndexPath(row: oldIndexPath.row+1, section: 0)
+                    self.tableView.selectRow(at: indexPath, animated: true, scrollPosition: UITableViewScrollPosition.middle)
+                    self.tableView.delegate?.tableView!(self.tableView, didSelectRowAt: indexPath)
             }
         }
     }
-    
-    func selectSongInTableView(song:Song) {
-        print("selectSongInTableView song no \(songs.count) , row \(song.idx)")
-        let indexPath = IndexPath(row: song.idx, section: 0)
-        DispatchQueue.main.async {[weak self] in
-            self?.tableView.selectRow(at: indexPath, animated: true, scrollPosition: UITableViewScrollPosition.middle)
-        }
-    }
-
-
-
 }
