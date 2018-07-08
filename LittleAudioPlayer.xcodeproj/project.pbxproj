@@ -18,6 +18,8 @@
 		ECC09A1220F1F1010067F28A /* LICENSE.md in Resources */ = {isa = PBXBuildFile; fileRef = ECC09A0F20F1F1010067F28A /* LICENSE.md */; };
 		ECC09A1320F1F1010067F28A /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = ECC09A1020F1F1010067F28A /* README.md */; };
 		ECC09A1420F1F1010067F28A /* CachingPlayerItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC09A1120F1F1010067F28A /* CachingPlayerItem.swift */; };
+		ECC09A1620F210CB0067F28A /* CachedAlbumsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC09A1520F210CB0067F28A /* CachedAlbumsTableViewController.swift */; };
+		ECC09A1820F237C70067F28A /* CachedSongsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC09A1720F237C70067F28A /* CachedSongsTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +38,8 @@
 		ECC09A0F20F1F1010067F28A /* LICENSE.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = LICENSE.md; sourceTree = "<group>"; };
 		ECC09A1020F1F1010067F28A /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		ECC09A1120F1F1010067F28A /* CachingPlayerItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CachingPlayerItem.swift; sourceTree = "<group>"; };
+		ECC09A1520F210CB0067F28A /* CachedAlbumsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CachedAlbumsTableViewController.swift; sourceTree = "<group>"; };
+		ECC09A1720F237C70067F28A /* CachedSongsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CachedSongsTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,6 +94,8 @@
 				EC709D3620D6EFFA0078CFA5 /* AppDelegate.swift */,
 				EC95BFFD20DE394000277043 /* FoldersTableViewController.swift */,
 				EC709D3A20D6EFFA0078CFA5 /* Main.storyboard */,
+				ECC09A1720F237C70067F28A /* CachedSongsTableViewController.swift */,
+				ECC09A1520F210CB0067F28A /* CachedAlbumsTableViewController.swift */,
 				EC95C00120DFA18600277043 /* LogonViewController.swift */,
 				EC95BFFF20DE943F00277043 /* SongsTableViewController.swift */,
 				ECC09A0220E161F30067F28A /* Song.swift */,
@@ -231,7 +237,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ECC09A1820F237C70067F28A /* CachedSongsTableViewController.swift in Sources */,
 				ECC09A0320E161F30067F28A /* Song.swift in Sources */,
+				ECC09A1620F210CB0067F28A /* CachedAlbumsTableViewController.swift in Sources */,
 				ECC09A1420F1F1010067F28A /* CachingPlayerItem.swift in Sources */,
 				EC95BFFE20DE394000277043 /* FoldersTableViewController.swift in Sources */,
 				EC95C00220DFA18600277043 /* LogonViewController.swift in Sources */,
