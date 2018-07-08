@@ -13,10 +13,18 @@ class Song {
     var title:String
     var url: URL?
     var idx:Int
+    var size:UInt64?
     init(album:String, title:String, idx:Int) {
         self.title = title
         self.idx = idx
         self.album = album
+    }
+    init(album:String, title:String, idx:Int, url:URL, size:UInt64) {
+        self.title = title
+        self.idx = idx
+        self.album = album
+        self.size = size
+        self.url = url
     }
     func path() -> String {
         return "/\(album)/\(title)"

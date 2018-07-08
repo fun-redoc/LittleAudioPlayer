@@ -34,7 +34,7 @@ class CachedAlbumsTableViewController: UITableViewController {
                         let  byteCountFormatter =  ByteCountFormatter()
                         byteCountFormatter.allowedUnits = .useMB
                         byteCountFormatter.countStyle = .file
-                        let files = try FileManager.default.contentsOfDirectory(at: documentsDirectoryURL, includingPropertiesForKeys: nil, options: [])
+                        let files = try FileManager.default.contentsOfDirectory(at: documentsDirectoryURL, includingPropertiesForKeys: [.fileSizeKey], options: [])
                         for file in files {
                             let folderFileSizeInBytes = (try? FileManager.default.attributesOfItem(atPath: file.path)[.size] as? NSNumber)??.uint64Value ?? 0
                             // format it using NSByteCountFormatter to display it properly
@@ -120,11 +120,10 @@ class CachedAlbumsTableViewController: UITableViewController {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
         if let senderCell = sender as? UITableViewCell, let album = senderCell.textLabel?.text {
-            if let  songsTableViewController = segue.destination as? SongsTableViewController {
+            if let  songsTableViewController = segue.destination as? CachedSongsTableViewController {
                 songsTableViewController.album = album
             }
         }
-
     }
 
 }
