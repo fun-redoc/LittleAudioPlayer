@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		EC709D3720D6EFFA0078CFA5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC709D3620D6EFFA0078CFA5 /* AppDelegate.swift */; };
-		EC709D3920D6EFFA0078CFA5 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC709D3820D6EFFA0078CFA5 /* ViewController.swift */; };
 		EC709D3C20D6EFFA0078CFA5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EC709D3A20D6EFFA0078CFA5 /* Main.storyboard */; };
 		EC709D3E20D6EFFB0078CFA5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EC709D3D20D6EFFB0078CFA5 /* Assets.xcassets */; };
 		EC709D4120D6EFFB0078CFA5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EC709D3F20D6EFFB0078CFA5 /* LaunchScreen.storyboard */; };
@@ -16,6 +15,9 @@
 		EC95C00020DE943F00277043 /* SongsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC95BFFF20DE943F00277043 /* SongsTableViewController.swift */; };
 		EC95C00220DFA18600277043 /* LogonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC95C00120DFA18600277043 /* LogonViewController.swift */; };
 		ECC09A0320E161F30067F28A /* Song.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC09A0220E161F30067F28A /* Song.swift */; };
+		ECC09A1220F1F1010067F28A /* LICENSE.md in Resources */ = {isa = PBXBuildFile; fileRef = ECC09A0F20F1F1010067F28A /* LICENSE.md */; };
+		ECC09A1320F1F1010067F28A /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = ECC09A1020F1F1010067F28A /* README.md */; };
+		ECC09A1420F1F1010067F28A /* CachingPlayerItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC09A1120F1F1010067F28A /* CachingPlayerItem.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,7 +25,6 @@
 		EA6609801C3A2039E96B3A98 /* Pods-LittleAudioPlayer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LittleAudioPlayer.release.xcconfig"; path = "Pods/Target Support Files/Pods-LittleAudioPlayer/Pods-LittleAudioPlayer.release.xcconfig"; sourceTree = "<group>"; };
 		EC709D3320D6EFFA0078CFA5 /* LittleAudioPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LittleAudioPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC709D3620D6EFFA0078CFA5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		EC709D3820D6EFFA0078CFA5 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		EC709D3B20D6EFFA0078CFA5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		EC709D3D20D6EFFB0078CFA5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EC709D4020D6EFFB0078CFA5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -32,6 +33,9 @@
 		EC95BFFF20DE943F00277043 /* SongsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongsTableViewController.swift; sourceTree = "<group>"; };
 		EC95C00120DFA18600277043 /* LogonViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogonViewController.swift; sourceTree = "<group>"; };
 		ECC09A0220E161F30067F28A /* Song.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Song.swift; sourceTree = "<group>"; };
+		ECC09A0F20F1F1010067F28A /* LICENSE.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = LICENSE.md; sourceTree = "<group>"; };
+		ECC09A1020F1F1010067F28A /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		ECC09A1120F1F1010067F28A /* CachingPlayerItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CachingPlayerItem.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,8 +86,8 @@
 		EC709D3520D6EFFA0078CFA5 /* LittleAudioPlayer */ = {
 			isa = PBXGroup;
 			children = (
+				ECC09A0E20F1F1010067F28A /* CachingPlayerItem-master */,
 				EC709D3620D6EFFA0078CFA5 /* AppDelegate.swift */,
-				EC709D3820D6EFFA0078CFA5 /* ViewController.swift */,
 				EC95BFFD20DE394000277043 /* FoldersTableViewController.swift */,
 				EC709D3A20D6EFFA0078CFA5 /* Main.storyboard */,
 				EC95C00120DFA18600277043 /* LogonViewController.swift */,
@@ -94,6 +98,16 @@
 				EC709D4220D6EFFB0078CFA5 /* Info.plist */,
 			);
 			path = LittleAudioPlayer;
+			sourceTree = "<group>";
+		};
+		ECC09A0E20F1F1010067F28A /* CachingPlayerItem-master */ = {
+			isa = PBXGroup;
+			children = (
+				ECC09A0F20F1F1010067F28A /* LICENSE.md */,
+				ECC09A1020F1F1010067F28A /* README.md */,
+				ECC09A1120F1F1010067F28A /* CachingPlayerItem.swift */,
+			);
+			path = "CachingPlayerItem-master";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -161,7 +175,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ECC09A1220F1F1010067F28A /* LICENSE.md in Resources */,
 				EC709D4120D6EFFB0078CFA5 /* LaunchScreen.storyboard in Resources */,
+				ECC09A1320F1F1010067F28A /* README.md in Resources */,
 				EC709D3E20D6EFFB0078CFA5 /* Assets.xcassets in Resources */,
 				EC709D3C20D6EFFA0078CFA5 /* Main.storyboard in Resources */,
 			);
@@ -216,9 +232,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				ECC09A0320E161F30067F28A /* Song.swift in Sources */,
+				ECC09A1420F1F1010067F28A /* CachingPlayerItem.swift in Sources */,
 				EC95BFFE20DE394000277043 /* FoldersTableViewController.swift in Sources */,
 				EC95C00220DFA18600277043 /* LogonViewController.swift in Sources */,
-				EC709D3920D6EFFA0078CFA5 /* ViewController.swift in Sources */,
 				EC95C00020DE943F00277043 /* SongsTableViewController.swift in Sources */,
 				EC709D3720D6EFFA0078CFA5 /* AppDelegate.swift in Sources */,
 			);
