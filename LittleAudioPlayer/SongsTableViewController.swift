@@ -37,6 +37,7 @@ class SongsTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -90,19 +91,24 @@ class SongsTableViewController: UITableViewController {
                         let timeHrs = Int(timeInS / (60*60))
                         let timeMin = Int(timeInS / 60) % 60
                         let timeSec = Int(timeInS) % 60
-//                        let timeString = String(format: "%02f sec", CMTimeGetSeconds(time))
                         let timeString = String(format: "%02d:%02d:%02d", timeHrs, timeMin, timeSec)
                         let durationInS = CMTimeGetSeconds((strongSelf.player.currentItem?.duration)!)
-                        let durationHrs = Int(durationInS / (60*60))
-                        let durationMin = Int(durationInS / 60) % 60
-                        let durationSec = Int(durationInS) % 60
-
-                        let durationString = String(format: "%02d:%02d:%02d", durationHrs, durationMin, durationSec)
+                        var timeLabel:String
+                        if !durationInS.isNaN {
+                            let durationHrs = Int(durationInS / (60*60))
+                            let durationMin = Int(durationInS / 60) % 60
+                            let durationSec = Int(durationInS) % 60
+                            
+                            let durationString = String(format: "%02d:%02d:%02d", durationHrs, durationMin, durationSec)
+                            timeLabel = "\(timeString) / \(durationString)"
+                        } else {
+                            timeLabel = "\(timeString)"
+                        }
         
                         if UIApplication.shared.applicationState == .active {
                             let indexPath = strongSelf.tableView.indexPathForSelectedRow
                             let myCell = strongSelf.tableView.cellForRow(at: indexPath!)
-                            myCell?.detailTextLabel?.text = "\(timeString) / \(durationString)"
+                            myCell?.detailTextLabel?.text = timeLabel
                         } else {
                             print("Background: \(timeString)")
                         }
@@ -245,8 +251,11 @@ class SongsTableViewController: UITableViewController {
                             if let url = url {
                                 song.setUrl(url)
                                 DispatchQueue.main.async {
-                                    me.player.replaceCurrentItem(with: AVPlayerItem(url: url))
-                                    me.player.play()
+                                    // see also https://github.com/neekeetab/CachingPlayerItem/issues/7
+                                    let playerItem = CachingPlayerItemWithSong(withSong: song)
+                                    playerItem.delegate = self
+                                    me.player.replaceCurrentItem(with: playerItem)
+                                    // playing moved to CachingPlayerItemDelegate:playerItemReadyToPlay
                                 }
                             } else {
                                 // TODO user Error Messages
@@ -274,5 +283,50 @@ class SongsTableViewController: UITableViewController {
                     self.tableView.delegate?.tableView!(self.tableView, didSelectRowAt: indexPath)
             }
         }
+    }
+}
+
+extension SongsTableViewController:CachingPlayerItemDelegate {
+    
+    /// Is called when the media file is fully downloaded.
+    func playerItem(_ playerItem: CachingPlayerItem, didFinishDownloadingData data: Data) {
+        print("finished downloading, ready to save")
+        // TODO save to file
+        
+    }
+
+    /// Is called every time a new portion of data is received.
+    func playerItem(_ playerItem: CachingPlayerItem, didDownloadBytesSoFar bytesDownloaded: Int, outOf bytesExpected: Int) {
+        // TODO show download progress
+        //print("\(bytesDownloaded)/\(bytesExpected)")
+    }
+    
+    /// Is called after initial prebuffering is finished, means
+    /// we are ready to play.
+    func playerItemReadyToPlay(_ playerItem: CachingPlayerItem) {
+        print("playerItemReadyToPlay")
+        player.automaticallyWaitsToMinimizeStalling = false
+        player.play()
+    }
+    
+    /// Is called when the data being downloaded did not arrive in time to
+    /// continue the playback.
+//    func playerItemPlaybackStalled(_ playerItem: CachingPlayerItem) {
+//
+//    }
+    
+    /// Is called on downloading error.
+    func playerItem(_ playerItem: CachingPlayerItem, downloadingFailedWith error: Error) {
+        print(error)
+    }
+    
+}
+
+class CachingPlayerItemWithSong:CachingPlayerItem {
+    private(set) var song:Song
+    init(withSong song:Song) {
+        assert(song.url != nil)
+        self.song = song
+        super.init(url: song.url!)
     }
 }

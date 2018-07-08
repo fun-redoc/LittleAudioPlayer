@@ -54,7 +54,8 @@ open class CachingPlayerItem: AVPlayerItem {
                 
                 // If we're playing from a url, we need to download the file.
                 // We start loading the file on first request only.
-                guard let interceptedUrl = loadingRequest.request.url,
+                guard let interceptedUrl = loadingRequest.request.url?.deletingLastPathComponent(), // see hacky workouround https://github.com/neekeetab/CachingPlayerItem/issues/7
+                //guard let interceptedUrl = loadingRequest.request.url,
                     let initialScheme = owner?.initialScheme,
                     let initialUrl = interceptedUrl.withScheme(initialScheme) else {
                     fatalError("internal inconsistency")
@@ -197,7 +198,9 @@ open class CachingPlayerItem: AVPlayerItem {
         self.url = url
         self.initialScheme = scheme
         
-        let asset = AVURLAsset(url: urlWithCustomScheme)
+        // see hacky worouround: https://github.com/neekeetab/CachingPlayerItem/issues/7
+        let asset = AVURLAsset(url: urlWithCustomScheme.appendingPathComponent("/fake.mp3"))
+//        let asset = AVURLAsset(url: urlWithCustomScheme)
         asset.resourceLoader.setDelegate(resourceLoaderDelegate, queue: DispatchQueue.main)
         super.init(asset: asset, automaticallyLoadedAssetKeys: nil)
         
