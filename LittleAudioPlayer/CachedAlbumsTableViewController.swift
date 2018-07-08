@@ -11,7 +11,17 @@ import UIKit
 class CachedAlbumsTableViewController: UITableViewController {
     
     var albums:[String] = []
-    var sizesMB:[String] = []
+    
+    var documentsDirectoryURL:URL?
+    
+    
+    private(set) var  byteCountFormatter =  ByteCountFormatter() {
+        didSet {
+            byteCountFormatter.allowedUnits = .useMB
+            byteCountFormatter.countStyle = .file
+        }
+    }
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,6 +32,8 @@ class CachedAlbumsTableViewController: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
         
+        documentsDirectoryURL =  FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
+        
 //        DispatchQueue.global(qos: .userInteractive).async { [weak self] in
 //            if let me = self,
               if let documentsDirectoryURL =  FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
@@ -31,17 +43,9 @@ class CachedAlbumsTableViewController: UITableViewController {
                     print("url is a folder url")
                     // lets get the folder files
                     do {
-                        let  byteCountFormatter =  ByteCountFormatter()
-                        byteCountFormatter.allowedUnits = .useMB
-                        byteCountFormatter.countStyle = .file
                         let files = try FileManager.default.contentsOfDirectory(at: documentsDirectoryURL, includingPropertiesForKeys: [.fileSizeKey], options: [])
                         for file in files {
-                            let folderFileSizeInBytes = (try? FileManager.default.attributesOfItem(atPath: file.path)[.size] as? NSNumber)??.uint64Value ?? 0
-                            // format it using NSByteCountFormatter to display it properly
-                            let folderSizeToDisplay = byteCountFormatter.string(fromByteCount: Int64(folderFileSizeInBytes))
-                            print("--> \(file.lastPathComponent), size: \(folderSizeToDisplay)")  // "X,XXX,XXX bytes"
                             albums.append(file.lastPathComponent)
-                            sizesMB.append(folderSizeToDisplay)
                         }
                     } catch {
                         print(error)
@@ -72,8 +76,30 @@ class CachedAlbumsTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "albumRow", for: indexPath)
 
         // Configure the cell...
+        let album = albums[indexPath.row]
         cell.textLabel?.text = albums[indexPath.row]
-        cell.detailTextLabel?.text = sizesMB[indexPath.row]
+        if let documentsDirectoryURL = documentsDirectoryURL {
+            DispatchQueue.global(qos: .default).async {
+                do {
+                    let albumPath = documentsDirectoryURL.appendingPathComponent(album).standardizedFileURL
+                    let files = try FileManager.default.contentsOfDirectory(at: albumPath, includingPropertiesForKeys: [.fileSizeKey], options: [])
+                    var fileSizeInBytes:UInt64 = 0
+                    for file in files {
+                        fileSizeInBytes += (try? FileManager.default.attributesOfItem(atPath: file.path)[.size] as? NSNumber)??.uint64Value ?? 0
+                        DispatchQueue.main.async {[weak self] in
+                            if let byteCountFormater = self?.byteCountFormatter {
+                                let sizeString = byteCountFormater.string(fromByteCount: Int64(fileSizeInBytes))
+                                cell.detailTextLabel?.text = "songs: \(files.count), size: \(sizeString)"
+                            } else {
+                                cell.detailTextLabel?.text = "songs: \(files.count)"
+                            }
+                        }
+                    }
+                } catch {
+                    print(error)
+                }
+            }
+        }
 
         return cell
     }
