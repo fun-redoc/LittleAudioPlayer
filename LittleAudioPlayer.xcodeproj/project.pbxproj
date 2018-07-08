@@ -40,6 +40,7 @@
 		ECC09A1120F1F1010067F28A /* CachingPlayerItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CachingPlayerItem.swift; sourceTree = "<group>"; };
 		ECC09A1520F210CB0067F28A /* CachedAlbumsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CachedAlbumsTableViewController.swift; sourceTree = "<group>"; };
 		ECC09A1720F237C70067F28A /* CachedSongsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CachedSongsTableViewController.swift; sourceTree = "<group>"; };
+		ECC09A1920F24E1F0067F28A /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +103,7 @@
 				EC709D3D20D6EFFB0078CFA5 /* Assets.xcassets */,
 				EC709D3F20D6EFFB0078CFA5 /* LaunchScreen.storyboard */,
 				EC709D4220D6EFFB0078CFA5 /* Info.plist */,
+				ECC09A1920F24E1F0067F28A /* README.md */,
 			);
 			path = LittleAudioPlayer;
 			sourceTree = "<group>";
