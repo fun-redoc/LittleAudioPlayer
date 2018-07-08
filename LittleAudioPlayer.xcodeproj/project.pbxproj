@@ -21,6 +21,7 @@
 		ECC09A1620F210CB0067F28A /* CachedAlbumsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC09A1520F210CB0067F28A /* CachedAlbumsTableViewController.swift */; };
 		ECC09A1820F237C70067F28A /* CachedSongsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC09A1720F237C70067F28A /* CachedSongsTableViewController.swift */; };
 		ECC09A1B20F296440067F28A /* PropertiesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC09A1A20F296440067F28A /* PropertiesTableViewController.swift */; };
+		ECC09A1D20F2A6BF0067F28A /* LICENSE.md in Resources */ = {isa = PBXBuildFile; fileRef = ECC09A1C20F2A6BF0067F28A /* LICENSE.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,6 +44,7 @@
 		ECC09A1720F237C70067F28A /* CachedSongsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CachedSongsTableViewController.swift; sourceTree = "<group>"; };
 		ECC09A1920F24E1F0067F28A /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		ECC09A1A20F296440067F28A /* PropertiesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertiesTableViewController.swift; sourceTree = "<group>"; };
+		ECC09A1C20F2A6BF0067F28A /* LICENSE.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = LICENSE.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +109,7 @@
 				EC709D3F20D6EFFB0078CFA5 /* LaunchScreen.storyboard */,
 				EC709D4220D6EFFB0078CFA5 /* Info.plist */,
 				ECC09A1920F24E1F0067F28A /* README.md */,
+				ECC09A1C20F2A6BF0067F28A /* LICENSE.md */,
 			);
 			path = LittleAudioPlayer;
 			sourceTree = "<group>";
@@ -190,6 +193,7 @@
 				EC709D4120D6EFFB0078CFA5 /* LaunchScreen.storyboard in Resources */,
 				ECC09A1320F1F1010067F28A /* README.md in Resources */,
 				EC709D3E20D6EFFB0078CFA5 /* Assets.xcassets in Resources */,
+				ECC09A1D20F2A6BF0067F28A /* LICENSE.md in Resources */,
 				EC709D3C20D6EFFA0078CFA5 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
