@@ -286,13 +286,51 @@ class SongsTableViewController: UITableViewController {
     }
 }
 
+func createAlbumFolderAndThan(_ name:String, continuation:(_ path:URL)->Void) {
+    guard let documentsDirectoryURL =  FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
+        print("failed to deterim document directory")
+        return
+    }
+    let newDirectoryPath = documentsDirectoryURL.appendingPathComponent(name).standardizedFileURL
+    var isDir:ObjCBool = true
+    if FileManager.default.fileExists(atPath: newDirectoryPath.path, isDirectory: &isDir) {
+        guard isDir.boolValue == true else {
+            print("cannot create folder, a file withthe same name already exists")
+            return
+        }
+    } else {
+        do {
+            try FileManager.default.createDirectory(at: newDirectoryPath, withIntermediateDirectories: false, attributes:nil)
+        } catch {
+            print("failed to create album folder, got \(error)")
+            return
+        }
+    }
+    continuation(newDirectoryPath)
+}
+
+
 extension SongsTableViewController:CachingPlayerItemDelegate {
     
     /// Is called when the media file is fully downloaded.
     func playerItem(_ playerItem: CachingPlayerItem, didFinishDownloadingData data: Data) {
         print("finished downloading, ready to save")
-        // TODO save to file
-        
+        DispatchQueue.global(qos: .background).async {
+            if let playerItemWithSong = playerItem as? CachingPlayerItemWithSong {
+                createAlbumFolderAndThan(playerItemWithSong.song.album) { (path:URL) in
+                    print("saving song under \(path)")
+                    do {
+                        try data.write(to: path.appendingPathComponent(playerItemWithSong.song.title))
+                        print("successfully saved \(playerItemWithSong.song)")
+                    } catch {
+                        print("failed to save \(playerItemWithSong.song), due to \(error)")
+                    }
+                }
+            } else {
+                print("failed to cast player item")
+                return
+            }
+        }
     }
 
     /// Is called every time a new portion of data is received.

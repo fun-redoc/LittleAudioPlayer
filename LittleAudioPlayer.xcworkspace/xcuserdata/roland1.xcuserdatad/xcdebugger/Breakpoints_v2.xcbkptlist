@@ -106,7 +106,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "LittleAudioPlayer/FoldersTableViewController.swift"
-            timestampString = "552731092.422156"
+            timestampString = "552733790.304778"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "81"
@@ -122,7 +122,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "LittleAudioPlayer/SongsTableViewController.swift"
-            timestampString = "552731092.4225"
+            timestampString = "552733790.30512"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "218"
@@ -154,11 +154,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "LittleAudioPlayer/SongsTableViewController.swift"
-            timestampString = "552731092.424253"
+            timestampString = "552733790.306352"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "333"
-            endingLineNumber = "333">
+            startingLineNumber = "371"
+            endingLineNumber = "371">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -168,7 +168,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "LittleAudioPlayer/SongsTableViewController.swift"
-            timestampString = "552731092.424737"
+            timestampString = "552733790.306785"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "284"
@@ -240,7 +240,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "LittleAudioPlayer/SongsTableViewController.swift"
-            timestampString = "552731092.425231"
+            timestampString = "552733790.307254"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "285"
@@ -304,11 +304,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "LittleAudioPlayer/SongsTableViewController.swift"
-            timestampString = "552731092.425652"
+            timestampString = "552733790.30769"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "333"
-            endingLineNumber = "333">
+            startingLineNumber = "371"
+            endingLineNumber = "371">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -318,11 +318,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "LittleAudioPlayer/SongsTableViewController.swift"
-            timestampString = "552731092.426054"
+            timestampString = "552733790.3079751"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "333"
-            endingLineNumber = "333">
+            startingLineNumber = "371"
+            endingLineNumber = "371">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -412,7 +412,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "LittleAudioPlayer/SongsTableViewController.swift"
-            timestampString = "552731092.426374"
+            timestampString = "552733790.3082941"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "252"

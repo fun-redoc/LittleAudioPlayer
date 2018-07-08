@@ -25,4 +25,7 @@ class Song {
         // TODO remenber the time
         self.url = url
     }
+    var description:String {
+        return "Album: \(album), Song: \(title)"
+    }
 }
