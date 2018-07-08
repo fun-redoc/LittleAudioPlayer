@@ -20,6 +20,7 @@
 		ECC09A1420F1F1010067F28A /* CachingPlayerItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC09A1120F1F1010067F28A /* CachingPlayerItem.swift */; };
 		ECC09A1620F210CB0067F28A /* CachedAlbumsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC09A1520F210CB0067F28A /* CachedAlbumsTableViewController.swift */; };
 		ECC09A1820F237C70067F28A /* CachedSongsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC09A1720F237C70067F28A /* CachedSongsTableViewController.swift */; };
+		ECC09A1B20F296440067F28A /* PropertiesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC09A1A20F296440067F28A /* PropertiesTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,6 +42,7 @@
 		ECC09A1520F210CB0067F28A /* CachedAlbumsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CachedAlbumsTableViewController.swift; sourceTree = "<group>"; };
 		ECC09A1720F237C70067F28A /* CachedSongsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CachedSongsTableViewController.swift; sourceTree = "<group>"; };
 		ECC09A1920F24E1F0067F28A /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		ECC09A1A20F296440067F28A /* PropertiesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertiesTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,6 +93,7 @@
 		EC709D3520D6EFFA0078CFA5 /* LittleAudioPlayer */ = {
 			isa = PBXGroup;
 			children = (
+				ECC09A1A20F296440067F28A /* PropertiesTableViewController.swift */,
 				ECC09A0E20F1F1010067F28A /* CachingPlayerItem-master */,
 				EC709D3620D6EFFA0078CFA5 /* AppDelegate.swift */,
 				EC95BFFD20DE394000277043 /* FoldersTableViewController.swift */,
@@ -241,6 +244,7 @@
 			files = (
 				ECC09A1820F237C70067F28A /* CachedSongsTableViewController.swift in Sources */,
 				ECC09A0320E161F30067F28A /* Song.swift in Sources */,
+				ECC09A1B20F296440067F28A /* PropertiesTableViewController.swift in Sources */,
 				ECC09A1620F210CB0067F28A /* CachedAlbumsTableViewController.swift in Sources */,
 				ECC09A1420F1F1010067F28A /* CachingPlayerItem.swift in Sources */,
 				EC95BFFE20DE394000277043 /* FoldersTableViewController.swift in Sources */,

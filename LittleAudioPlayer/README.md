@@ -1,14 +1,17 @@
 #  Backlog
 ## Work
++ Properties Page - Cache all available Files
++ Properties Page - Delete all cached files
 ## Done
++ Properties Page - Show Cached Files (Size, Count)
 ## TODO
++ Online Player - Buttons prev, next, etc.
++ Offline Player - Buttons prev, next, play all, pause, resume
 + Add License Model
 + Add License for CachingPlayerItem
 + Add License for DropBoxApi
 + Properties Page - Access Licenses
 + Properties Page - Impressum
-+ Properties Page - Delete all cached files
-+ Properties Page - Show Cached Files (Size, Count)
 + Add Subfolder for Cached Files unter Documents Folder instead usng Documentsfolder directly
 + Readme File for github
 + Information for App Store
